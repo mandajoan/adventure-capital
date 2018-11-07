@@ -113,3 +113,11 @@ i {
     }
     
 }
+
+.btn {
+    margin: 20px !important;
+}
+
+#calForm{
+    margin-top: 40px;
+}
