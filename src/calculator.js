@@ -31,6 +31,8 @@ class Calculator extends Component {
                 )
         }
     }
+
+
     createForm() {
         return (
             <Form horizontal id="calForm">
