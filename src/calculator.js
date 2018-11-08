@@ -16,9 +16,8 @@ class Calculator extends Component {
         }
     }
     fetchTripCost(){
-        let URL = 'https://www.budgetyourtrip.com/api/v3/costs/location/4167147'
-        axios({method: 'GET', url: URL, headers: { 'Content-Type': "application/json", 'Access-Control-Allow-Origin': 'http://localhost:3000',
-          'X-API-KEY':'pisarski' }})
+        let URL = 'https://adventure-capital-backend.herokuapp.com/location/Paris'
+        axios.get(URL, {headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': "application/json"}})
         .then(response => {
             console.log(response)
         })
@@ -29,7 +28,7 @@ class Calculator extends Component {
     destinationsDropdown() {
         for (var i = 0; i <= destinations.length; i++) {
             return (
-                <Col sm={12} lg={4}>
+               
                 <DropdownButton
                     componentClass={InputGroup.Button}
                     id="input-dropdown-addon"
@@ -37,7 +36,7 @@ class Calculator extends Component {
                 >
                     {destinations.map((item, index) => (<MenuItem key={index}>{item.city}</MenuItem>))}
                     </DropdownButton>
-                  </Col>
+                 
                 )
         }
     }
@@ -45,9 +44,9 @@ class Calculator extends Component {
 
     createForm() {
         return (
-            <Form horizontal id="calForm">
+            <Form inline id="calForm">
                 <FormGroup controlId="formInlineCalc" bsSize="large">
-                  
+                  <InputGroup bsSize="large">
                         {this.destinationsDropdown()}
                        
                         <DropdownButton
@@ -64,7 +63,7 @@ class Calculator extends Component {
                         >
                             <MenuItem key="1">Item</MenuItem>
                         </DropdownButton>
-                    
+                    </InputGroup>
                 </FormGroup>
             </Form>
 
