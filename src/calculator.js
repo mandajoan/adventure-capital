@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, HelpBlock, Form, DropdownButton, MenuItem, InputGroup, Col} from 'react-bootstrap';
-
+import axios from 'axios';
 
 const destinations = [{ "city": "Paris", "country": "France", "geonameId": 2988507 }, { "city": "Bangkok", "country": "Thailand", "geonameId": 1609350 }, { "city": "New York", "country": "United States", "geonameId": 5128581 }, { "city": "Bali", "country": "Indonesia", "geonameId": 1650535 }, { "city": "Istanbul", "country": "Turkey", "geonameId": 745044 }, { "city": "Lima", "country": "Peru", "geonameId": 3936456}]
 
@@ -15,7 +15,17 @@ class Calculator extends Component {
             costPerDay:''
         }
     }
-
+    fetchTripCost(){
+        let URL = 'https://www.budgetyourtrip.com/api/v3/costs/location/4167147'
+        axios({method: 'GET', url: URL, headers: { 'Content-Type': "application/json", 'Access-Control-Allow-Origin': 'http://localhost:3000',
+          'X-API-KEY':'pisarski' }})
+        .then(response => {
+            console.log(response)
+        })
+    }
+    componentDidMount(){
+        this.fetchTripCost()
+    }
     destinationsDropdown() {
         for (var i = 0; i <= destinations.length; i++) {
             return (
