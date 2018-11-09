@@ -329,7 +329,7 @@ class Calculator extends Component {
             <StyledHead>Fun fact!</StyledHead><br /><StyledP> {this.state.results.Fact}</StyledP>
         </StyledAlert></SpacingDiv> : <StyledButton className="btn btn-warning btn-lg" onClick={this.fetchTripCost}>Let's Go!</StyledButton>
         return (
-            <Grid>
+            <Grid className="calcContainer">
             <Row>
             {this.createForm()}
             </Row>
