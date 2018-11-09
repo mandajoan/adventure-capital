@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-
+import {Grid } from 'react-bootstrap';
 import './App.css';
 import HeaderTypography from './header';
-import Calculator from './calculator'
+import Calculator from './calculator';
+
 
 class App extends Component {
-  
+
   render() {
     return (
       <div className="App">
@@ -13,7 +14,10 @@ class App extends Component {
                 <HeaderTypography />
                 
             </header>
+            
             <Calculator />
+           
+            
       </div>
     );
   }

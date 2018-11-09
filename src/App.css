@@ -84,7 +84,7 @@ body {
     font-weight: 100;
     margin: 0;
     line-height: 1;
-    color: #FF4500;
+    color: #f0ad4e;
 
     @media only screen and (max-width: 465px) {
         position: relative;
@@ -127,7 +127,7 @@ i {
 }
 
 .form-group{
-    width: 75%;
+    width: 90%;
 }
 
 .input-group{
@@ -135,7 +135,7 @@ i {
 }
 
 .react-datepicker-wrapper {
-    width: 65%;
+    width: 90%;
     margin-top: 20px !important;
 }
 .react-datepicker__input-container{
@@ -162,3 +162,17 @@ i {
 .dropdown-toggle {
     color: dimgrey;
 }
+
+.resultsRow{
+    width:80%;
+}
+
+.resultsItem {
+margin: 0 auto;
+color: black !important;
+}
+
+.resultsCol{
+    margin-top: 20px;
+}
+

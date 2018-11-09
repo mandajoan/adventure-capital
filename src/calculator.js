@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, Form, DropdownButton, MenuItem, InputGroup, Col, Grid} from 'react-bootstrap';
+import { FormGroup, Form, DropdownButton, MenuItem, InputGroup, Col, Grid, Row, Button} from 'react-bootstrap';
 import axios from 'axios';
 
 import DatePicker from "react-datepicker";
@@ -16,6 +16,8 @@ class Calculator extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this)
         //this.toggleClass = this.toggleClass.bind(this)
+        this.fetchTripCost = this.fetchTripCost.bind(this)
+       // this.calculateSavingsPlan = this.calculateSavingsPlan.bind(this)
         this.state = {
             startDate: moment().toArray(),
             destination: '', 
@@ -44,18 +46,28 @@ class Calculator extends Component {
         console.log(todaysDate)
         console.log(leaveDate)
         var days = leaveDate.diff(todaysDate, 'days')
-
-        console.log(days)
+        this.setState({
+             daysTillTravel: days
+        })
+        
     }
+
     fetchTripCost(){
-        let URL = 'https://adventure-capital-backend.herokuapp.com/location/Paris'
+        console.log(this.state.destination)
+        let URL = `https://adventure-capital-backend.herokuapp.com/location/${this.state.destination}`
         axios.get(URL, {headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': "application/json"}})
         .then(response => {
-            console.log(response)
+            let tripCostResults = response.data
+            this.setState({
+                showResults: true, 
+                results: tripCostResults
+            })
+            
         })
     }
+
     componentDidMount(){
-        this.fetchTripCost()
+        //this.fetchTripCost()
     }
 
     toggleClass(index, e) {
@@ -75,7 +87,9 @@ class Calculator extends Component {
         
     }
     toggleLengthClass(v){
-       console.log(v)
+       this.setState({
+        lengthOfTravel: v
+       }, ()=> console.log(this.state))
     }
 
 
@@ -149,12 +163,110 @@ class Calculator extends Component {
             
             )
     }
+    generateResults(){
+      
+        if(this.state.showResults === true){
+            let dailyCost = parseInt(this.state.results.AverageDailyCost)
+            let hotelCost = parseInt(this.state.results.AverageHotelCostNightly)
+            console.log(dailyCost)
+            console.log(hotelCost)
+            let totalDailyCost = dailyCost + hotelCost
+            console.log(totalDailyCost)
+            let totalTripCost = totalDailyCost * this.state.lengthOfTravel
+            let ttcost = `$${totalTripCost}`
+            console.log(ttcost)
+            return (
+                <Row className="resultsRow">
+                <Col lg={6} sm={12}>
+                     <h4 className="resultsItem">Average Daily for Travel in {this.state.destination}  : ${totalDailyCost}</h4>   <br />
+                     <h4 className="resultsItem">You will need to save {ttcost} </h4> <br />
+                    
+                </Col>
+                <Col lg={6} sm={12}>
+                {this.state.paySet ? this.savingsIncrement(totalTripCost) : this.payDropDowns()}
+                </Col>
+              
+                </Row>
+        
+               )
+        } else {
+            return <div> </div>
+        }
+       
+            
+    }
+  
+    payDropDowns(){
+        console.log('days till travel', this.state.daysTillTravel)
+        if(this.state.daysTillTravel > 6){
+            let payIncrements = ["Weekly", "Bi-Monthly", "Monthly"]
+            for(var i = 0; i <= payIncrements.length; i++){
+                return (
+                    <DropdownButton bsSize="large"
+                    componentClass={InputGroup.Button}
+                    id="input-dropdown-addon"
+                    title="How long do you want to explore?"
+                    className="resultsItem"
+                >
+                    
+                  {payIncrements.map((item, index) =>(<MenuItem value={item} key={index} onClick={this.calculateSavingsPlan.bind(this, item)}>{item}</MenuItem>))}
+                    </DropdownButton>
+                    
+                )
+            }
+        } else{
+
+            console.log('else')
+        }
+       
+    }
+
+    calculateSavingsPlan(item){
+        this.setState({
+            paySet: item
+        })
+    }
+    savingsIncrement(totalTripCost){
+        console.log(totalTripCost)
+        let daysTillTrip = this.state.daysTillTravel
+        let payScheduleValue
+        if(totalTripCost === 'Weekly'){
+            payScheduleValue = 7
+        } else if (totalTripCost === 'Bi-Weekly'){
+             payScheduleValue = 14
+        } else {
+            payScheduleValue = 30
+        }
+        console.log('days till trip', daysTillTrip)
+        let amountPerDay = (totalTripCost/daysTillTrip) 
+        console.log('amount per day', amountPerDay)
+        console.log('pay schedule value', payScheduleValue)
+        let payPeriods = daysTillTrip/parseInt(payScheduleValue)
+        console.log('payPeriods', payPeriods)
+        let amountToSave = parseInt(amountPerDay) * payPeriods
+        console.log(amountToSave)
+        return(
+            <h4>{amountToSave}</h4>
+        )
+    }
+
 
     render() {
         return (
-            <div>
+            <Grid>
+            <Row>
             {this.createForm()}
-            </div>
+            </Row>
+            <Row>
+                <Col sm={12} lg={12}>
+                <Button bsSize="large" bsStyle="warning" onClick={this.fetchTripCost}>Plan Your Trip!</Button>
+                </Col>
+                <Col sm={12} lg={12} className="resultsCol">
+                
+                {this.generateResults()}
+                </Col>
+            </Row>
+            </Grid>
             
             )
     }
