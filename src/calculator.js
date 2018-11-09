@@ -160,6 +160,8 @@ class Calculator extends Component {
 
 //dynamically generates destination dropdown options
     //replace placeholder text once selection has been made
+    //new search button replaces destination dropdown once 'let's go!' has been selected and API call made
+    //need to add form validation
     destinationsDropdown() {
         for (var i = 0; i <= destinations.length; i++) {
             return (
@@ -178,6 +180,7 @@ class Calculator extends Component {
     }
 //dynamically generates length of travel dropdown options
     //replace placeholder text once selection has been made
+    //need to add form validation
     tripLengthDropdown() {
         for (var i = 0; i <= tripLength.length; i++) {
             return (
@@ -200,6 +203,7 @@ class Calculator extends Component {
 
   //brings in react-datepicker component
 //replace placeholder text once selection has been made
+//need to add form validation
     datePicker() {
         let placeholder = this.state.leaveDate ? `Leaving on ${moment(this.state.leaveDate).format("MM/DD/YYYY")}` : "When do you want to take off?"
         return (
@@ -335,13 +339,13 @@ class Calculator extends Component {
         )
     }
 
-
+//button to refresh state and allow new search
     newSearch() {
         return (
             <StyledButton2 className="btn btn-warning btn-lg"  onClick={this.NewSearchSelection.bind(this)}>New Search</StyledButton2>
             )
     }
-
+//refreshes state
     NewSearchSelection() {
         console.log(this.state)
         this.setState({
@@ -365,6 +369,7 @@ class Calculator extends Component {
     }
 
     render() {
+        //disables api button until all selections have been made
         let disabledButton
         if (this.state.destination == null || this.state.destination == '' || this.state.lengthOfTravel == null || this.state.lengthOfTravel == '' || this.state.leaveDate == null || this.state.leaveDate == '') {
             disabledButton = 'disabled'
