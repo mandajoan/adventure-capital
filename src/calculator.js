@@ -177,7 +177,7 @@ class Calculator extends Component {
                         title={this.state.lengthOfTravelID ? `Traveling for ${this.state.lengthOfTravelID}` : "How long do you want to explore?"}
                     
                 >
-                    {tripLength.map((item, index) => (<MenuItem key={index} value={item.value} className={this.state.activeLengthValue == item.value ? 'active' : null} id="lengthDrowpown" onClick={this.toggleLengthClass.bind(this, item)}>{item.name}</MenuItem>))}
+                    {tripLength.map((item, index) => (<MenuItem key={index} value={item.value} className={this.state.activeLengthValue == item.value ? 'active' : null}  onClick={this.toggleLengthClass.bind(this, item)}>{item.name}</MenuItem>))}
                     </DropdownButton>
                  </Col>
                 )
