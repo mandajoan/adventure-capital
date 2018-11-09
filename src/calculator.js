@@ -205,7 +205,7 @@ class Calculator extends Component {
                     <DropdownButton bsSize="large"
                     componentClass={InputGroup.Button}
                     id="input-dropdown-addon"
-                    title="How long do you want to explore?"
+                    title="Select Your Paycheck Increment"
                     className="resultsItem"
                 >
                     
