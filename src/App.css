@@ -3,7 +3,7 @@
 
 
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 
@@ -22,7 +22,8 @@
 
 html, body {
     height: 100%;
-    overflow:auto
+    overflow:auto;
+    position: relative;
 }
 
 body {
@@ -32,7 +33,7 @@ body {
 }
 
 .calcContainer{
-   margin-bottom: 60px;
+   padding-bottom: 60px;
 }
 
 .inner-text {
