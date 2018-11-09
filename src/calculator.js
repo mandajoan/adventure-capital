@@ -7,7 +7,7 @@ import moment from "moment";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-
+//styled-components definitions 
 const StyledButton = styled.button`
 margin-top: 40px;
 margin-bottom: 20px;
@@ -49,7 +49,7 @@ font-size: 18px;
 `
 
 const MotivationalP = styled.p`
-
+font-family: 'Caveat', cursive;
 font-size: 25px;
 color: black;
 `
@@ -59,28 +59,30 @@ color: darkgrey;
 `
 
 
+//definitions for dropdowns
+//Goal was to allow user to search for city/location using Budget Your Trip API (suggest destinations if search had no results) but moved forward with my own api so decided to hardcode options in
 
 const destinations = [{ "city": "Paris", "country": "France", "geonameId": 2988507 }, { "city": "Bangkok", "country": "Thailand", "geonameId": 1609350 }, { "city": "New York", "country": "United States", "geonameId": 5128581 }, { "city": "Bali", "country": "Indonesia", "geonameId": 1650535 }, { "city": "Istanbul", "country": "Turkey", "geonameId": 745044 }, { "city": "Lima", "country": "Peru", "geonameId": 3936456}]
 const tripLength = [{"name": "2 days", "value": 2}, {"name": "1 Week", "value": 7}, {"name": "2 weeks", "value": 14}, {"name": "3 weeks", "value": 21}, {"name": "1 month", "value": 30} ]
+
+
 class Calculator extends Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this)
-        //this.toggleClass = this.toggleClass.bind(this)
+        this.handleChange = this.handleChange.bind(this)   
         this.fetchTripCost = this.fetchTripCost.bind(this)
-       // this.calculateSavingsPlan = this.calculateSavingsPlan.bind(this)
+    
         this.state = {
             startDate: moment().toArray(),
             destination: '', 
             lengthOfTravel: '',
             dateOfTravel: '', 
-            costPerDay:'', 
-            activeIndex: 0, 
-            activeLengthIndex: 0
+            costPerDay:''
+           
         }
         
     }
-
+//handles dropdown change for date selector
     handleChange(date) {
         
         this.setState({
@@ -89,7 +91,7 @@ class Calculator extends Component {
         }, () => this.calculateDateDifference())
      
     }
-
+//calculates time left till trip using moment.js
     calculateDateDifference() {
         console.log(this.state.leaveDate)
         var todaysDate = moment(this.state.startDate)
@@ -102,7 +104,7 @@ class Calculator extends Component {
         })
         
     }
-
+//api request to adventure-capital backend 
     fetchTripCost(){
         console.log(this.state.destination)
         let URL = `https://adventure-capital-backend.herokuapp.com/location/${this.state.destination}`
@@ -117,10 +119,8 @@ class Calculator extends Component {
         })
     }
 
-    componentDidMount(){
-        //this.fetchTripCost()
-    }
 
+//adds selection indicator for active dropdown item for destinations
     toggleClass(index, e) {
         
         for (var i = 0; i <= destinations.length; i++) {
@@ -137,22 +137,27 @@ class Calculator extends Component {
        
         
     }
+
+//adds active selection indicator to dropdown item and stores length of travel
     toggleLengthClass(v){
-       this.setState({
-        lengthOfTravel: v
+        this.setState({
+           activeLengthValue: v.value,
+            lengthOfTravel: v.value, 
+        lengthOfTravelID: v.name
        }, ()=> console.log(this.state))
     }
 
 
-
+//dynamically generates destination dropdown options
+    //replace placeholder text once selection has been made
     destinationsDropdown() {
         for (var i = 0; i <= destinations.length; i++) {
             return (
                 <Col sm={12} lg={4}>
                     <DropdownButton bsSize="large"
-                    componentClass={InputGroup.Button}
-                    id="input-dropdown-addon"
-                    title="Where do you want to go?"
+                        componentClass={InputGroup.Button}
+                        id="input-dropdown-addon"
+                        title={this.state.destination != '' ? `Traveling to ${this.state.destination}` : "Where do you want to go?"}
                 >
                     {destinations.map((item, index) => (<MenuItem key={index} className={this.state.activeIndex === index ? 'active' : null} onClick={this.toggleClass.bind(this, index)}>{item.city}</MenuItem>))}
                     </DropdownButton>
@@ -160,17 +165,19 @@ class Calculator extends Component {
                 )
         }
     }
+//dynamically generates length of travel dropdown options
+    //replace placeholder text once selection has been made
     tripLengthDropdown() {
         for (var i = 0; i <= tripLength.length; i++) {
             return (
                 <Col sm={12} lg={4}>
                     <DropdownButton bsSize="large"
-                    componentClass={InputGroup.Button}
-                    id="input-dropdown-addon"
-                    title="How long do you want to explore?"
+                        componentClass={InputGroup.Button}
+                        id="input-dropdown-addon"
+                        title={this.state.lengthOfTravelID ? `Traveling for ${this.state.lengthOfTravelID}` : "How long do you want to explore?"}
                     
                 >
-                    {tripLength.map((item, index) => (<MenuItem key={index} value={item.value} className={this.state.activeLengthIndex == index ? 'active' : null} onClick={this.toggleLengthClass.bind(this, item.value)}>{item.name}</MenuItem>))}
+                    {tripLength.map((item, index) => (<MenuItem key={index} value={item.value} className={this.state.activeLengthValue == item.value ? 'active' : null} onClick={this.toggleLengthClass.bind(this, item)}>{item.name}</MenuItem>))}
                     </DropdownButton>
                  </Col>
                 )
@@ -180,14 +187,14 @@ class Calculator extends Component {
 
 
 
-  //  <div class="react-datepicker-wrapper"><div class="react-datepicker__input-container"><input type="text" value="11/23/2018" class=""></div></div>
-
+  //brings in react-datepicker component
+//replace placeholder text once selection has been made
     datePicker() {
-       
+        let placeholder = this.state.leaveDate ? `Leaving on ${moment(this.state.leaveDate).format("MM/DD/YYYY")}` : "When do you want to take off?"
         return (
             <Col sm={12} lg={4}>
          
-                <DatePicker onChange={this.handleChange} className="form-control calendarForm" placeholderText="When do you want to take off?" dateFormat="LLL"/>
+                <DatePicker onChange={this.handleChange} className="form-control calendarForm" placeholderText={placeholder} dateFormat="LLL"/>
 
             </Col>
             
@@ -195,43 +202,40 @@ class Calculator extends Component {
             )
     }
 
-
+//creates form for trip calculator
     createForm() {
         return (
             <StyledContainer className='container'>
             <Form inline id="calForm">
                 <FormGroup  controlId="formInlineCalc" bsSize="large">
-                        <InputGroup className="row">
-                        {this.destinationsDropdown()}
-                            {this.datePicker()}
+                   <InputGroup className="row">
+                       {this.destinationsDropdown()}
+                       {this.datePicker()}
                        {this.tripLengthDropdown()}
                      
                     </InputGroup>
                 </FormGroup>
-                </Form>
-                </StyledContainer>
+            </Form>
+            </StyledContainer>
 
             
             )
     }
+
+   //graps average cost per day from API call to calculate total cost of trip which is passed to helper functions to either calculate how much to save in time remaining till trip or by pay period if time remaining is greater than one week
     generateResults(){
-      
         if(this.state.showResults === true){
             let dailyCost = parseInt(this.state.results.AverageDailyCost)
             let hotelCost = parseInt(this.state.results.AverageHotelCostNightly)
-            console.log(dailyCost)
-            console.log(hotelCost)
-            let totalDailyCost = dailyCost + hotelCost
-            console.log(totalDailyCost)
+            let totalDailyCost = dailyCost + hotelCost   
             let totalTripCost = totalDailyCost * this.state.lengthOfTravel
             let ttcost = `$${totalTripCost}`
-            console.log(ttcost)
             return (
                 <Row className="resultsRow well">
                     <Col lg={6} sm={12}>
                         <StyledH3>Our Estimate for your Adventure's Cost: </StyledH3><br />
-                     <StyledH4 className="resultsItem">Average Daily for Travel in {this.state.destination} is ${totalDailyCost}</StyledH4>   <br />
-                     <StyledH4 className="resultsItem">You will need to save {ttcost} in total!</StyledH4> <br />
+                     <StyledH4 className="resultsItem">Average Daily for Travel in {this.state.destination}  : ${totalDailyCost}</StyledH4>   <br />
+                     <StyledH4 className="resultsItem">You will need to save {ttcost} </StyledH4> <br />
                     
                 </Col>
                 <Col lg={6} sm={12}>
@@ -247,7 +251,9 @@ class Calculator extends Component {
        
             
     }
-  
+
+    //creates dropdown menu to select pay increment is time left before trip is greater than 6 days
+    //if time left is less than 6 days indicates total amount left to 'save' in time remaining
     payDropDowns(totalTripCost){
         console.log('days till travel', this.state.daysTillTravel)
         if(this.state.daysTillTravel > 6){
@@ -258,7 +264,7 @@ class Calculator extends Component {
                     <DropdownButton bsSize="large"
                     componentClass={InputGroup.Button}
                     id="input-dropdown-addon"
-                    title="Select Your Paycheck Increment"
+                            title={this.state.paySet ? this.state.paySet : "Select Your Paycheck Increment"}
                     className="resultsItem incrementBtn"
                 >
                     
@@ -273,7 +279,7 @@ class Calculator extends Component {
             return (
                 <div>
                     <StyledH3>Here's the Game Plan: </StyledH3> <br />
-                <StyledH4>You need to save ${Math.round(totalTripCost)} in the next {daysTillTrip} days</StyledH4><br />
+                <StyledH4>You need to save ${Math.round(totalTripCost)} in the next {daysTillTrip} days!</StyledH4><br />
                     <MotivationalP>You got this!</MotivationalP>
                     </div>
             )
@@ -281,14 +287,15 @@ class Calculator extends Component {
         }
        
     }
-
+//sets pay increment in state which triggers 'Let's Go' button to hide and 'Fun Fact' to show
     calculateSavingsPlan(item){
         this.setState({
             paySet: item
         })
     }
+
+  //calculates amount to save per pay increment (rounds to nearest integer)
     savingsIncrement(totalTripCost){
-        console.log(this.state.paySet)
         let daysTillTrip = this.state.daysTillTravel
         let payScheduleValue
         if(this.state.paySet === 'Weekly'){
@@ -298,19 +305,18 @@ class Calculator extends Component {
         } else {
             payScheduleValue = 30
         }
-        console.log('days till trip', daysTillTrip)
+
         let amountPerDay = (totalTripCost/daysTillTrip) 
-        console.log('amount per day', amountPerDay)
-        console.log('pay schedule value', payScheduleValue)
+
         let payPeriods = daysTillTrip/parseInt(payScheduleValue)
-        console.log('payPeriods', payPeriods)
+
         let amountToSave = (totalTripCost/payPeriods)
-        console.log('amount to save per pay period', amountToSave)
+
         return (
             <div>
                 <StyledH3>Here's the Game Plan: </StyledH3> <br />
             <StyledH4>You need to save ${Math.round(amountToSave)} per paycheck!</StyledH4><br />
-                <StyledH4>Way to plan ahead! You got this!</StyledH4>
+                <MotivationalP>Way to plan ahead! You got this!</MotivationalP>
                 </div>
         )
     }
@@ -323,7 +329,7 @@ class Calculator extends Component {
             <StyledHead>Fun fact!</StyledHead><br /><StyledP> {this.state.results.Fact}</StyledP>
         </StyledAlert></SpacingDiv> : <StyledButton className="btn btn-warning btn-lg" onClick={this.fetchTripCost}>Let's Go!</StyledButton>
         return (
-            <Grid className="calcContainer">
+            <Grid>
             <Row>
             {this.createForm()}
             </Row>

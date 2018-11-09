@@ -61,6 +61,7 @@ const StyledLogo = styled.p`
 
 class HeaderTypography extends Component {
     componentDidMount() {
+        //triggers header animation function in index.html script
         window.headerAnimation()
     }
     render() {
