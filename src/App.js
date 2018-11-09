@@ -6,7 +6,7 @@ import Calculator from './calculator';
 import styled from 'styled-components'
 
 const StyledFooter = styled.div`
-position: absolute;
+position: static;
     left: 0;
     bottom: 0;
     width: 100%;
