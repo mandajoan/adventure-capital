@@ -4,16 +4,15 @@ Technologies Used:
 
 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 - HTTP Requests made with [Axios](https://www.npmjs.com/package/axios)
 
-- Styled with [Styled-Components](https://www.styled-components.com/)
+- Styled with [Styled-Components](https://www.styled-components.com/) and [React-Bootstrap](https://react-bootstrap.github.io/)
 
-and [React-Bootstrap](https://react-bootstrap.github.io/)
+- Date Selector by [React Datepicker](https://reactdatepicker.com/)
 
-
-Sources Used: 
+Additional Sources Referenced: 
 
 - [Header background](https://mbtskoudsalg.com/explore/world-travel-png/)
 
