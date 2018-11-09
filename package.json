@@ -5,9 +5,11 @@
   "dependencies": {
     "axios": "^0.17.1",
     "font-awesome": "^4.7.0",
+    "moment": "^2.22.2",
+    "prop-types": "^15.6.2",
     "react": "^16.6.0",
     "react-bootstrap": "^0.32.4",
-    "react-bootstrap-date-picker": "^5.1.0",
+    "react-datepicker": "^1.8.0",
     "react-dom": "^16.6.0",
     "react-scripts": "2.1.1"
   },

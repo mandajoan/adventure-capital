@@ -121,3 +121,44 @@ i {
 #calForm{
     margin-top: 40px;
 }
+
+.container {
+    width: 100%;
+}
+
+.form-group{
+    width: 75%;
+}
+
+.input-group{
+   width: 100%;
+}
+
+.react-datepicker-wrapper {
+    width: 65%;
+    margin-top: 20px !important;
+}
+.react-datepicker__input-container{
+    width: 100%;
+    color: dimgrey !important;
+}
+.calendarForm {
+    width: 100% !important;
+    color: black;
+}
+    .calendarForm:hover {
+        background-color: #d4d4d4;
+        color: black !important;
+        border-color: dimgrey;
+    }
+
+.dropdown input-group-btn input-group-btn-lg{
+    margin: 0 auto;
+}
+.dropdown {
+    display: block;
+    margin: 0 auto;
+}
+.dropdown-toggle {
+    color: dimgrey;
+}
