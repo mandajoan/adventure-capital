@@ -30,7 +30,7 @@ margin: 0 auto;
 color: black !important;
 `
 const StyledAlert = styled.div`
-width: 60%;
+width: 80%;
 margin: 0 auto;
 
 `
@@ -45,9 +45,17 @@ font-size: 30px;
 `
 
 const StyledP = styled.p`
-
 font-size: 18px;
+`
 
+const MotivationalP = styled.p`
+font-family: 'Caveat', cursive;
+font-size: 25px;
+color: black;
+`
+
+const StyledH3 = styled.h3`
+color: darkgrey;
 `
 
 
@@ -220,13 +228,14 @@ class Calculator extends Component {
             console.log(ttcost)
             return (
                 <Row className="resultsRow well">
-                <Col lg={6} sm={12}>
+                    <Col lg={6} sm={12}>
+                        <StyledH3>Our Estimate for your Adventure's Cost: </StyledH3><br />
                      <StyledH4 className="resultsItem">Average Daily for Travel in {this.state.destination}  : ${totalDailyCost}</StyledH4>   <br />
                      <StyledH4 className="resultsItem">You will need to save {ttcost} </StyledH4> <br />
                     
                 </Col>
                 <Col lg={6} sm={12}>
-                {this.state.paySet ? this.savingsIncrement(totalTripCost) : this.payDropDowns()}
+                {this.state.paySet ? this.savingsIncrement(totalTripCost) : this.payDropDowns(totalTripCost)}
                 </Col>
               
                 </Row>
@@ -239,7 +248,7 @@ class Calculator extends Component {
             
     }
   
-    payDropDowns(){
+    payDropDowns(totalTripCost){
         console.log('days till travel', this.state.daysTillTravel)
         if(this.state.daysTillTravel > 6){
             let payIncrements = ["Weekly", "Bi-Weekly", "Monthly"]
@@ -250,7 +259,7 @@ class Calculator extends Component {
                     componentClass={InputGroup.Button}
                     id="input-dropdown-addon"
                     title="Select Your Paycheck Increment"
-                    className="resultsItem"
+                    className="resultsItem incrementBtn"
                 >
                     
                   {payIncrements.map((item, index) =>(<MenuItem value={item} key={index} onClick={this.calculateSavingsPlan.bind(this, item)}>{item}</MenuItem>))}
@@ -259,8 +268,16 @@ class Calculator extends Component {
                 )
             }
         } else{
-
-            console.log('else')
+            let daysTillTrip = this.state.daysTillTravel
+            let amountPerDay = (totalTripCost / daysTillTrip) 
+            return (
+                <div>
+                    <StyledH3>Here's the Game Plan: </StyledH3> <br />
+                <StyledH4>You need to save ${Math.round(totalTripCost)} in the next {daysTillTrip} days!</StyledH4><br />
+                    <MotivationalP>You got this!</MotivationalP>
+                    </div>
+            )
+           
         }
        
     }
@@ -289,8 +306,12 @@ class Calculator extends Component {
         console.log('payPeriods', payPeriods)
         let amountToSave = (totalTripCost/payPeriods)
         console.log('amount to save per pay period', amountToSave)
-        return(
-            <StyledH4>{amountToSave}</StyledH4>
+        return (
+            <div>
+                <StyledH3>Here's the Game Plan: </StyledH3> <br />
+            <StyledH4>You need to save ${Math.round(amountToSave)} per paycheck!</StyledH4><br />
+                <MotivationalP>Way to plan ahead! You got this!</MotivationalP>
+                </div>
         )
     }
 
