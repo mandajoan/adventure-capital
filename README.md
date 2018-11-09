@@ -5,6 +5,9 @@
 
  By using Adventure Capital you **invest** in your *wanderlust*, by planning how much to **save**, so you can be free to **explore** when the time comes to go!
 
+ [Checkout Adventure Capital for yourself!](https://adventure-capital.herokuapp.com/)
+
+ [API for Adventure Capital](https://github.com/mandajoan/adventure-capital-backend)
 
 Technologies Used:
 
