@@ -1,9 +1,9 @@
 
-# Adventure Capital allows you to finanically plan for you dream adventure. 
+### Adventure Capital allows you to finanically plan for you dream adventure. 
 
-## Select your destination, take off date, and length of travel to then calculate how much you need to save based on your income increment. 
+ Select your destination, take off date, and length of travel to then calculate how much you need to save based on your income increment. 
 
-### By using Adventure Capital you **invest** in your *wanderlust*, by planning how much to **save**, so you can be free to **explore** when the time comes to go!
+ By using Adventure Capital you ** invest ** in your *wanderlust*, by planning how much to **save**, so you can be free to **explore** when the time comes to go!
 
 
 Technologies Used:
