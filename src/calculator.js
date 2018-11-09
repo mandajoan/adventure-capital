@@ -113,7 +113,8 @@ class Calculator extends Component {
             let tripCostResults = response.data
             this.setState({
                 showResults: true, 
-                results: tripCostResults
+                results: tripCostResults, 
+                disabled: true
             })
             
         })
@@ -133,8 +134,10 @@ class Calculator extends Component {
                 },
                     () => console.log(this.state));
             }
+
+           
         }
-       
+   
         
     }
 
@@ -291,11 +294,13 @@ class Calculator extends Component {
     calculateSavingsPlan(item){
         this.setState({
             paySet: item
+            
         })
     }
 
   //calculates amount to save per pay increment (rounds to nearest integer)
-    savingsIncrement(totalTripCost){
+    savingsIncrement(totalTripCost) {
+
         let daysTillTrip = this.state.daysTillTravel
         let payScheduleValue
         if(this.state.paySet === 'Weekly'){
@@ -307,11 +312,12 @@ class Calculator extends Component {
         }
 
         let amountPerDay = (totalTripCost/daysTillTrip) 
-
+        console.log(amountPerDay)
         let payPeriods = daysTillTrip/parseInt(payScheduleValue)
-
-        let amountToSave = (totalTripCost/payPeriods)
-
+        console.log(payPeriods)
+        let amountToSave = (totalTripCost / payPeriods)
+        console.log(amountToSave)
+        console.log(this.state)
         return (
             <div>
                 <StyledH3>Here's the Game Plan: </StyledH3> <br />
@@ -322,7 +328,33 @@ class Calculator extends Component {
     }
 
 
+    newSearch() {
+        return (
+            <StyledButton className="btn btn-warning btn-lg"  onClick={this.NewSearchSelection.bind(this)}>New Search</StyledButton>
+            )
+    }
 
+    NewSearchSelection() {
+        console.log(this.state)
+        this.setState({
+            disabled: false,
+            startDate: moment().toArray(),
+            destination: '',
+            lengthOfTravel: '',
+            dateOfTravel: '',
+            costPerDay: '', 
+            daysTillTravel: 0,
+            results: '',
+            paySet: '', 
+            showResults: false, 
+            selection: '', 
+            leaveDate: ''
+            
+
+
+
+        })
+    }
 
     render() {
         let showFact = this.state.showResults === true ? <SpacingDiv> <StyledAlert className="alert alert-warning" >
@@ -331,7 +363,7 @@ class Calculator extends Component {
         return (
             <Grid className="calcContainer">
             <Row>
-            {this.createForm()}
+            {this.state.disabled === true ? this.newSearch() : this.createForm()}
             </Row>
             <Row>
                 <Col sm={12} lg={12}>
