@@ -176,7 +176,7 @@ class Calculator extends Component {
             let ttcost = `$${totalTripCost}`
             console.log(ttcost)
             return (
-                <Row className="resultsRow">
+                <Row className="resultsRow well">
                 <Col lg={6} sm={12}>
                      <h4 className="resultsItem">Average Daily for Travel in {this.state.destination}  : ${totalDailyCost}</h4>   <br />
                      <h4 className="resultsItem">You will need to save {ttcost} </h4> <br />
@@ -202,6 +202,7 @@ class Calculator extends Component {
             let payIncrements = ["Weekly", "Bi-Monthly", "Monthly"]
             for(var i = 0; i <= payIncrements.length; i++){
                 return (
+                    <FormGroup>
                     <DropdownButton bsSize="large"
                     componentClass={InputGroup.Button}
                     id="input-dropdown-addon"
@@ -211,7 +212,7 @@ class Calculator extends Component {
                     
                   {payIncrements.map((item, index) =>(<MenuItem value={item} key={index} onClick={this.calculateSavingsPlan.bind(this, item)}>{item}</MenuItem>))}
                     </DropdownButton>
-                    
+                    </FormGroup>
                 )
             }
         } else{
