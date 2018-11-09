@@ -22,6 +22,7 @@
 
 html, body {
     height: 100%;
+    overflow:auto
 }
 
 body {
@@ -31,7 +32,7 @@ body {
 }
 
 .calcContainer{
-    padding-bottom: 60px;
+    padding-bottom: 30px;
 }
 
 .inner-text {

@@ -6,11 +6,11 @@ import Calculator from './calculator';
 import styled from 'styled-components'
 
 const StyledFooter = styled.div`
-position: fixed;
+position: relative;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 30px;
+    height: 20px;
     color: #eea236;
     text-align: center;
 `

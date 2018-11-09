@@ -315,7 +315,7 @@ class Calculator extends Component {
         return (
             <div>
                 <StyledH3>Here's the Game Plan: </StyledH3> <br />
-            <StyledH4>You need to save ${Math.round(amountToSave)} per paycheck!</StyledH4><br />
+            <StyledH4>Let's save ${Math.round(amountToSave)} per paycheck starting on {moment(this.state.startDate).format("MM/DD/YYYY")}!</StyledH4><br />
                 <MotivationalP>Way to plan ahead! You got this!</MotivationalP>
                 </div>
         )
