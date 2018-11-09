@@ -1,11 +1,54 @@
 import React, { Component } from 'react';
-import { FormGroup, Form, DropdownButton, MenuItem, InputGroup, Col, Grid, Row, Button} from 'react-bootstrap';
+import { FormGroup, Form, DropdownButton, MenuItem, InputGroup, Col, Grid, Row, Button, Alert} from 'react-bootstrap';
 import axios from 'axios';
-
+import styled from 'styled-components'
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
 import "react-datepicker/dist/react-datepicker.css";
+
+
+const StyledButton = styled.button`
+margin-top: 40px;
+margin-bottom: 20px;
+font-family: 'Caveat', cursive;
+font-size: 30px;
+
+`
+
+const StyledContainer = styled.div`
+width: 100%;
+
+`
+
+const StyledFormGroup = styled.div`
+ width: 90%;
+`
+
+const StyledH4 = styled.h4`
+margin: 0 auto;
+color: black !important;
+`
+const StyledAlert = styled.div`
+width: 60%;
+margin: 0 auto;
+
+`
+const SpacingDiv = styled.div`
+margin-top: 40px;
+margin-bottom: 40px;
+`
+const StyledHead = styled.p`
+font-family: 'Caveat', cursive;
+font-weight: bold;
+font-size: 30px;
+`
+
+const StyledP = styled.p`
+
+font-size: 18px;
+
+`
 
 
 
@@ -147,7 +190,7 @@ class Calculator extends Component {
 
     createForm() {
         return (
-            <Grid>
+            <StyledContainer className='container'>
             <Form inline id="calForm">
                 <FormGroup  controlId="formInlineCalc" bsSize="large">
                         <InputGroup className="row">
@@ -158,7 +201,7 @@ class Calculator extends Component {
                     </InputGroup>
                 </FormGroup>
                 </Form>
-                </Grid>
+                </StyledContainer>
 
             
             )
@@ -178,8 +221,8 @@ class Calculator extends Component {
             return (
                 <Row className="resultsRow well">
                 <Col lg={6} sm={12}>
-                     <h4 className="resultsItem">Average Daily for Travel in {this.state.destination}  : ${totalDailyCost}</h4>   <br />
-                     <h4 className="resultsItem">You will need to save {ttcost} </h4> <br />
+                     <StyledH4 className="resultsItem">Average Daily for Travel in {this.state.destination}  : ${totalDailyCost}</StyledH4>   <br />
+                     <StyledH4 className="resultsItem">You will need to save {ttcost} </StyledH4> <br />
                     
                 </Col>
                 <Col lg={6} sm={12}>
@@ -199,7 +242,7 @@ class Calculator extends Component {
     payDropDowns(){
         console.log('days till travel', this.state.daysTillTravel)
         if(this.state.daysTillTravel > 6){
-            let payIncrements = ["Weekly", "Bi-Monthly", "Monthly"]
+            let payIncrements = ["Weekly", "Bi-Weekly", "Monthly"]
             for(var i = 0; i <= payIncrements.length; i++){
                 return (
                     <FormGroup>
@@ -228,13 +271,13 @@ class Calculator extends Component {
         })
     }
     savingsIncrement(totalTripCost){
-        console.log(totalTripCost)
+        console.log(this.state.paySet)
         let daysTillTrip = this.state.daysTillTravel
         let payScheduleValue
-        if(totalTripCost === 'Weekly'){
+        if(this.state.paySet === 'Weekly'){
             payScheduleValue = 7
-        } else if (totalTripCost === 'Bi-Weekly'){
-             payScheduleValue = 14
+        } else if (this.state.paySet === 'Bi-Weekly'){
+             payScheduleValue = 15
         } else {
             payScheduleValue = 30
         }
@@ -244,15 +287,20 @@ class Calculator extends Component {
         console.log('pay schedule value', payScheduleValue)
         let payPeriods = daysTillTrip/parseInt(payScheduleValue)
         console.log('payPeriods', payPeriods)
-        let amountToSave = parseInt(amountPerDay) * payPeriods
-        console.log(amountToSave)
+        let amountToSave = (totalTripCost/payPeriods)
+        console.log('amount to save per pay period', amountToSave)
         return(
-            <h4>{amountToSave}</h4>
+            <StyledH4>{amountToSave}</StyledH4>
         )
     }
 
 
+
+
     render() {
+        let showFact = this.state.showResults === true ? <SpacingDiv> <StyledAlert className="alert alert-warning" >
+            <StyledHead>Fun fact!</StyledHead><br /><StyledP> {this.state.results.Fact}</StyledP>
+        </StyledAlert></SpacingDiv> : <StyledButton className="btn btn-warning btn-lg" onClick={this.fetchTripCost}>Let's Go!</StyledButton>
         return (
             <Grid>
             <Row>
@@ -260,11 +308,12 @@ class Calculator extends Component {
             </Row>
             <Row>
                 <Col sm={12} lg={12}>
-                <Button bsSize="large" bsStyle="warning" onClick={this.fetchTripCost}>Plan Your Trip!</Button>
+                        {showFact}
                 </Col>
                 <Col sm={12} lg={12} className="resultsCol">
                 
-                {this.generateResults()}
+                        {this.generateResults()}
+                    
                 </Col>
             </Row>
             </Grid>

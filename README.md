@@ -1,10 +1,25 @@
+
+
+Technologies Used:
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Sources: 
+- HTTP Requests made with [Axios](https://www.npmjs.com/package/axios)
 
-Header background: https://mbtskoudsalg.com/explore/world-travel-png/
+- Styled with [Styled-Components](https://www.styled-components.com/)
 
-Favicon: https://www.shareicon.net/tag/citycons
+and [React-Bootstrap](https://react-bootstrap.github.io/)
 
-Typography Inspiration: https://codepen.io/anon/pen/bQVrNp?editors=1111
+
+Sources Used: 
+
+- [Header background](https://mbtskoudsalg.com/explore/world-travel-png/)
+
+- [Favicon](https://www.kisspng.com/free/aircraft-icon.html)
+
+- [Typography Inspiration](https://codepen.io/anon/pen/bQVrNp?editors=1111)
+
+
 
