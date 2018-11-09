@@ -94,6 +94,7 @@ body {
 
 .dropdown input-group-btn input-group-btn-lg{
     margin: 0 auto;
+    width: 100% !important;
 }
 .dropdown {
     display: block;
@@ -116,4 +117,9 @@ body {
 
 .input-group-button{
     width: 90%
+}
+
+.input-group-btn{
+    width: 100%;
+    padding: 5px;
 }

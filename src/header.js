@@ -22,8 +22,9 @@ const StyledPOne = styled.p`
     @media only screen and (max-width: 465px) {
         display: block;
         position: absolute;
+        font-size: .45em;
         top: -25%;
-        left: 50%;
+        left: 40%;
         transform: translateX(-50%);
     }
 `
@@ -37,8 +38,11 @@ const StyledPTwo = styled.p`
     color: #f0ad4e;
 
     @media only screen and (max-width: 465px) {
-        position: relative;
-        top: 0.6em;
+        position: absolute;
+        font-size: .45em;
+        top: -25%;
+        left: 50%;
+        
     }
 `
 
@@ -63,8 +67,7 @@ class HeaderTypography extends Component {
         return (
             <StyledHeader className="hero">
                 <div className="inner-text">
-                    <StyledPOne className="p1">LET'S&nbsp;</StyledPOne>
-                    <StyledPTwo className="p2">EXPLORE</StyledPTwo>
+                    <StyledPOne className="p1">LET'S&nbsp;</StyledPOne>&nbsp;<StyledPTwo className="p2">EXPLORE</StyledPTwo>
                     <br />
                     
                 </div>
