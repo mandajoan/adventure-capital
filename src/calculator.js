@@ -15,6 +15,13 @@ font-family: 'Caveat', cursive;
 font-size: 30px;
 
 `
+const StyledButton2 = styled.button`
+
+margin-bottom: 20px;
+font-family: 'Caveat', cursive;
+font-size: 30px;
+
+`
 
 const StyledContainer = styled.div`
 width: 100%;
@@ -157,13 +164,14 @@ class Calculator extends Component {
         for (var i = 0; i <= destinations.length; i++) {
             return (
                 <Col sm={12} lg={4}>
-                    <DropdownButton bsSize="large"
-                        componentClass={InputGroup.Button}
-                        id="input-dropdown-addon"
-                        title={this.state.destination != '' ? `Traveling to ${this.state.destination}` : "Where do you want to go?"}
-                >
-                    {destinations.map((item, index) => (<MenuItem key={index} className={this.state.activeIndex === index ? 'active' : null} onClick={this.toggleClass.bind(this, index)}>{item.city}</MenuItem>))}
-                    </DropdownButton>
+                    {this.state.disabled === true ? this.newSearch() :
+                        <DropdownButton bsSize="large"
+                            componentClass={InputGroup.Button}
+                            id="input-dropdown-addon"
+                            title={this.state.destination != '' ? `Traveling to ${this.state.destination}` : "Where do you want to go?"}
+                        >
+                            {destinations.map((item, index) => (<MenuItem key={index} className={this.state.activeIndex === index ? 'active' : null} onClick={this.toggleClass.bind(this, index)}>{item.city}</MenuItem>))}
+                        </DropdownButton>}
                  </Col>
                 )
         }
@@ -212,7 +220,7 @@ class Calculator extends Component {
             <Form inline id="calForm">
                 <FormGroup  controlId="formInlineCalc" bsSize="large">
                    <InputGroup className="row">
-                       {this.destinationsDropdown()}
+                        {this.destinationsDropdown()}
                        {this.datePicker()}
                        {this.tripLengthDropdown()}
                      
@@ -238,7 +246,7 @@ class Calculator extends Component {
                     <Col lg={6} sm={12}>
                         <StyledH3>Our Estimate for your Adventure's Cost: </StyledH3><br />
                      <StyledH4 className="resultsItem">Average Daily for Travel in {this.state.destination}  : ${totalDailyCost}</StyledH4>   <br />
-                     <StyledH4 className="resultsItem">You will need to save {ttcost} </StyledH4> <br />
+                        <StyledH4 className="resultsItem">You will need to save {ttcost} for your {this.state.lengthOfTravel} day trip.</StyledH4> <br />
                     
                 </Col>
                 <Col lg={6} sm={12}>
@@ -321,7 +329,7 @@ class Calculator extends Component {
         return (
             <div>
                 <StyledH3>Here's the Game Plan: </StyledH3> <br />
-            <StyledH4>Let's save ${Math.round(amountToSave)} per paycheck starting on {moment(this.state.startDate).format("MM/DD/YYYY")}!</StyledH4><br />
+                <StyledH4>You have about {payPeriods} pay increments before your trip. <br />Let's save ${Math.round(amountToSave)} per paycheck starting on {moment(this.state.startDate).format("MM/DD/YYYY")}!</StyledH4><br />
                 <MotivationalP>Way to plan ahead! You got this!</MotivationalP>
                 </div>
         )
@@ -330,7 +338,7 @@ class Calculator extends Component {
 
     newSearch() {
         return (
-            <StyledButton className="btn btn-warning btn-lg"  onClick={this.NewSearchSelection.bind(this)}>New Search</StyledButton>
+            <StyledButton2 className="btn btn-warning btn-lg"  onClick={this.NewSearchSelection.bind(this)}>New Search</StyledButton2>
             )
     }
 
@@ -357,13 +365,19 @@ class Calculator extends Component {
     }
 
     render() {
+        let disabledButton
+        if (this.state.destination == null || this.state.destination == '' || this.state.lengthOfTravel == null || this.state.lengthOfTravel == '' || this.state.leaveDate == null || this.state.leaveDate == '') {
+            disabledButton = 'disabled'
+        } else {
+            disabledButton = ''
+        }
         let showFact = this.state.showResults === true ? <SpacingDiv> <StyledAlert className="alert alert-warning" >
             <StyledHead>Fun fact!</StyledHead><br /><StyledP> {this.state.results.Fact}</StyledP>
-        </StyledAlert></SpacingDiv> : <StyledButton className="btn btn-warning btn-lg" onClick={this.fetchTripCost}>Let's Go!</StyledButton>
+        </StyledAlert></SpacingDiv> : <StyledButton className={` ${disabledButton} btn btn-warning btn-lg`} onClick={this.fetchTripCost}>Let's Go!</StyledButton>
         return (
             <Grid className="calcContainer">
             <Row>
-            {this.state.disabled === true ? this.newSearch() : this.createForm()}
+            {this.createForm()}
             </Row>
             <Row>
                 <Col sm={12} lg={12}>
