@@ -49,7 +49,7 @@ font-size: 18px;
 `
 
 const MotivationalP = styled.p`
-font-family: 'Caveat', cursive;
+
 font-size: 25px;
 color: black;
 `
@@ -230,8 +230,8 @@ class Calculator extends Component {
                 <Row className="resultsRow well">
                     <Col lg={6} sm={12}>
                         <StyledH3>Our Estimate for your Adventure's Cost: </StyledH3><br />
-                     <StyledH4 className="resultsItem">Average Daily for Travel in {this.state.destination}  : ${totalDailyCost}</StyledH4>   <br />
-                     <StyledH4 className="resultsItem">You will need to save {ttcost} </StyledH4> <br />
+                     <StyledH4 className="resultsItem">Average Daily for Travel in {this.state.destination} is ${totalDailyCost}</StyledH4>   <br />
+                     <StyledH4 className="resultsItem">You will need to save {ttcost} in total!</StyledH4> <br />
                     
                 </Col>
                 <Col lg={6} sm={12}>
@@ -273,7 +273,7 @@ class Calculator extends Component {
             return (
                 <div>
                     <StyledH3>Here's the Game Plan: </StyledH3> <br />
-                <StyledH4>You need to save ${Math.round(totalTripCost)} in the next {daysTillTrip} days!</StyledH4><br />
+                <StyledH4>You need to save ${Math.round(totalTripCost)} in the next {daysTillTrip} days</StyledH4><br />
                     <MotivationalP>You got this!</MotivationalP>
                     </div>
             )
@@ -310,7 +310,7 @@ class Calculator extends Component {
             <div>
                 <StyledH3>Here's the Game Plan: </StyledH3> <br />
             <StyledH4>You need to save ${Math.round(amountToSave)} per paycheck!</StyledH4><br />
-                <MotivationalP>Way to plan ahead! You got this!</MotivationalP>
+                <StyledH4>Way to plan ahead! You got this!</StyledH4>
                 </div>
         )
     }
@@ -323,7 +323,7 @@ class Calculator extends Component {
             <StyledHead>Fun fact!</StyledHead><br /><StyledP> {this.state.results.Fact}</StyledP>
         </StyledAlert></SpacingDiv> : <StyledButton className="btn btn-warning btn-lg" onClick={this.fetchTripCost}>Let's Go!</StyledButton>
         return (
-            <Grid>
+            <Grid className="calcContainer">
             <Row>
             {this.createForm()}
             </Row>
